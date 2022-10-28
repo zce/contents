@@ -1,0 +1,20 @@
+- name: 工程化
+  slug: engineering
+
+- name: 自动化
+  slug: automation
+
+- name: 脚手架
+  slug: scaffolding
+
+- name: 模块化
+  slug: modularization
+
+- name: 轻应用
+  slug: light-app
+
+- name: 快应用
+  slug: quickapp
+
+- name: 小程序
+  slug: mini-program

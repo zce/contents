@@ -1,0 +1,33 @@
+- name: 未分类
+  slug: uncategorized
+  description: 未分类内容
+  cover: assets/uncategorized.jpg
+  meta:
+    title: 未分类
+    description: 全部未分类内容
+
+- name: 日志
+  slug: journal
+  description: 全部日志
+
+- name: 旅行
+  slug: travel
+  description: 全部旅行日志
+  parent: 日志
+
+- name: 摄影
+  slug: photography
+  description: 全部摄影日志
+  parent: 日志
+
+- name: 周刊
+  slug: weekly
+  description: 全部周刊
+
+- name: 教程
+  slug: tutorial
+  description: 全部教程
+
+- name: 指南
+  slug: guide
+  description: 全部指南
