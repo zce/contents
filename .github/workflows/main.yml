@@ -12,4 +12,4 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run build
-      - run: npx gh-pages -d dist -u "GitHub Actions <bots@github.com>" -t -f -r https://${{ secrets.GITHUB_TOKEN }}@github.com/zce/m2i.git
+      - run: npx gh-pages -d dist -u "GitHub Actions <bots@github.com>" -t -f -r https://${{ secrets.GITHUB_TOKEN }}@github.com/zce/contents.git
