@@ -8,6 +8,7 @@ import matter from 'gray-matter'
 import slugify from 'slugify'
 import linkExtractor from 'markdown-link-extractor'
 
+const domain = 'cdn.zce.me'
 const input = path.join(process.cwd(), 'contents')
 const output = path.join(process.cwd(), 'dist')
 // clear the output directory
@@ -23,7 +24,7 @@ const outputAsset = async (ref, source) => {
     const dirname = path.join(output, 'assets')
     await fs.mkdir(dirname, { recursive: true })
     await fs.copyFile(target, path.join(dirname, filename))
-    return `/assets/${filename}`
+    return `https://${domain}/assets/${filename}`
   } catch (err) {
     return ref
   }
@@ -128,4 +129,4 @@ await fs.writeFile(path.join(output, 'courses.json'), JSON.stringify(courses))
 await fs.writeFile(path.join(output, 'course-slugs.json'), JSON.stringify(courses.map(i => i.slug)))
 console.log(`Loaded ${courses.length} courses`)
 
-await fs.writeFile(path.join(output, 'CNAME'), 'cdn.zce.me')
+await fs.writeFile(path.join(output, 'CNAME'), domain)

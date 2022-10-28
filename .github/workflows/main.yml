@@ -12,4 +12,6 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run build
+      - run: npm install -g imagemin-cli imagemin-gifsicle imagemin-jpegtran imagemin-optipng imagemin-svgo
+      - run: imagemin dist/assets/*.{jpg,png,gif,svg} --out-dir=dist/assets
       - run: npx gh-pages -d dist -u "GitHub Actions <bots@github.com>" -t -f -r https://zce:${{ secrets.GITHUB_TOKEN }}@github.com/zce/contents.git
