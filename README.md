@@ -1,10 +1,6 @@
 # contents
 
-[![License][license-img]][license-url]
-[![NPM Downloads][downloads-img]][downloads-url]
-[![NPM Version][version-img]][version-url]
-[![Dependency Status][dependency-img]][dependency-url]
-[![Code Style][style-img]][style-url]
+[![License][license-img]][license-url] [![NPM Downloads][downloads-img]][downloads-url] [![NPM Version][version-img]][version-url] [![Dependency Status][dependency-img]][dependency-url] [![Code Style][style-img]][style-url]
 
 > creative contents created by zce..
 
@@ -64,8 +60,6 @@ const result = contents('w')
 ## License
 
 [Unlicense](LICENSE) &copy; [zce](https://zce.me)
-
-
 
 [license-img]: https://img.shields.io/github/license/zce/contents
 [license-url]: https://github.com/zce/contents/blob/master/LICENSE

@@ -91,13 +91,13 @@ xhr.onreadystatechange = function () {
 
 由于 `readystatechange` 事件是在 `xhr` 对象状态变化时触发（不单是在得到响应时），也就意味着这个事件会被触发多次，所以我们有必要了解每一个状态值代表的含义：
 
-| readyState | 状态描述         | 说明                                                      |
-| ---------- | ---------------- | --------------------------------------------------------- |
-| 0          | UNSENT           | 代理（XHR）被创建，但尚未调用 `open()` 方法。             |
-| 1          | OPENED           | `open()` 方法已经被调用，建立了连接。                     |
-| 2          | HEADERS_RECEIVED | `send()` 方法已经被调用，并且已经可以获取状态行和响应头。 |
-| 3          | LOADING          | 响应体下载中， `responseText` 属性可能已经包含部分数据。  |
-| 4          | DONE             | 响应体下载完成，可以直接使用 `responseText`。             |
+| readyState | 状态描述 | 说明 |
+| --- | --- | --- |
+| 0 | UNSENT | 代理（XHR）被创建，但尚未调用 `open()` 方法。 |
+| 1 | OPENED | `open()` 方法已经被调用，建立了连接。 |
+| 2 | HEADERS_RECEIVED | `send()` 方法已经被调用，并且已经可以获取状态行和响应头。 |
+| 3 | LOADING | 响应体下载中， `responseText` 属性可能已经包含部分数据。 |
+| 4 | DONE | 响应体下载完成，可以直接使用 `responseText`。 |
 
 #### 时间轴
 
@@ -414,7 +414,9 @@ app.get('/time', (req, res) => {
 XMLHttpRequest 在老版本浏览器（IE5/6）中有兼容问题，可以通过另外一种方式代替。
 
 ```javascript
-var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+var xhr = window.XMLHttpRequest
+  ? new XMLHttpRequest()
+  : new ActiveXObject('Microsoft.XMLHTTP')
 // xhr 的成员相同
 ```
 
@@ -465,14 +467,14 @@ xhr.send(null)
 
 > `responseType` 要在调用 `open()` 初始化请求之后，在调用 `send()` 发送请求到服务器之前设置方可生效。
 
-| 值            | 描述                                                                                                                                                         |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ""            | 将 responseType 设为空字符串与设置为"text"相同， 是默认类型 （实际上是 DOMString）。                                                                         |
-| "arraybuffer" | response 是一个包含二进制数据的 JavaScript ArrayBuffer 。                                                                                                    |
-| "blob"        | response 是一个包含二进制数据的 Blob 对象 。                                                                                                                 |
-| "document"    | response 是一个 HTML Document 或 XML XMLDocument ，这取决于接收到的数据的 MIME 类型。请参阅 HTML in XMLHttpRequest 以了解使用 XHR 获取 HTML 内容的更多信息。 |
-| "json"        | response 是一个 JavaScript 对象。这个对象是通过将接收到的数据类型视为 JSON 解析得到的。                                                                      |
-| "text"        | response 是包含在 DOMString 对象中的文本。                                                                                                                   |
+| 值 | 描述 |
+| --- | --- |
+| "" | 将 responseType 设为空字符串与设置为"text"相同， 是默认类型 （实际上是 DOMString）。 |
+| "arraybuffer" | response 是一个包含二进制数据的 JavaScript ArrayBuffer 。 |
+| "blob" | response 是一个包含二进制数据的 Blob 对象 。 |
+| "document" | response 是一个 HTML Document 或 XML XMLDocument ，这取决于接收到的数据的 MIME 类型。请参阅 HTML in XMLHttpRequest 以了解使用 XHR 获取 HTML 内容的更多信息。 |
+| "json" | response 是一个 JavaScript 对象。这个对象是通过将接收到的数据类型视为 JSON 解析得到的。 |
+| "text" | response 是包含在 DOMString 对象中的文本。 |
 
 ### FormData
 
@@ -525,7 +527,9 @@ function ajax(url, method, params, done) {
   }
   var querystring = pairs.join('&')
 
-  var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+  var xhr = window.XMLHttpRequest
+    ? new XMLHttpRequest()
+    : new ActiveXObject('Microsoft.XMLHTTP')
 
   xhr.addEventListener('readystatechange', function () {
     if (this.readyState !== 4) return

@@ -377,7 +377,10 @@ export default {
     <title>AMD Format output</title>
   </head>
   <body>
-    <script src="https://unpkg.com/requirejs@2.3.6/require.js" data-main="dist/index.js"></script>
+    <script
+      src="https://unpkg.com/requirejs@2.3.6/require.js"
+      data-main="dist/index.js"
+    ></script>
   </body>
 </html>
 ```

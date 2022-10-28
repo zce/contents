@@ -324,9 +324,11 @@ update()
 
 ```javascript
 // 魔法注释
-import(/* webpackChunkName: 'posts' */ './posts/posts').then(({ default: posts }) => {
-  mainElement.appendChild(posts())
-})
+import(/* webpackChunkName: 'posts' */ './posts/posts').then(
+  ({ default: posts }) => {
+    mainElement.appendChild(posts())
+  }
+)
 ```
 
 所谓魔法注释，就是在 import 函数的形式参数位置，添加一个行内注释，这个注释有一个特定的格式：`webpackChunkName: '<chunk-name>'`，这样就可以给分包的 chunk 起名字了。

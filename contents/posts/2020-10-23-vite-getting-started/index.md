@@ -50,10 +50,10 @@ $ yarn
 $ yarn dev
 ```
 
-> P.S.
-> `npm init` 或者 `yarn create` 是这两个包管理工具提供的新功能，
-> 其内部就是自动去安装一个 `create-<xxx>` 的模块（临时），然后自动执行这个模块中的 bin。
-> 例如:
+> P.S. `npm init` 或者 `yarn create` 是这两个包管理工具提供的新功能，其内部就是自动去安装一个 `create-<xxx>` 的模块（临时），然后自动执行这个模块中的 bin。
+>
+> **例如**:
+>
 > `yarn create react-app my-react-app` 就相当于先 `yarn global add create-react-app`，然后自动执行 `create-react-app my-react-app`
 
 #### 对比差异点
@@ -240,7 +240,12 @@ const app = new Koa()
 app.use(async (ctx, next) => {
   if (ctx.path.startsWith('/@modules/')) {
     const moduleName = ctx.path.substr(10) // => vue
-    const modulePkg = require(path.join(cwd, 'node_modules', moduleName, 'package.json'))
+    const modulePkg = require(path.join(
+      cwd,
+      'node_modules',
+      moduleName,
+      'package.json'
+    ))
     ctx.path = path.join('/node_modules', moduleName, modulePkg.module)
   }
   await next()

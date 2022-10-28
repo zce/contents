@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: npm install --ignore-scripts
+      - run: npm install
       - run: npm run lint
-      - run: npm run build --if-present
-      - run: npm run test --if-present
+      - run: npm run build
+      - run: npx gh-pages -d dist -u "GitHub Actions <bots@github.com>" -t -f -r https://${{ secrets.GITHUB_TOKEN }}@github.com/zce/m2i.git

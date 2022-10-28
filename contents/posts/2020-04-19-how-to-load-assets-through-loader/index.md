@@ -216,17 +216,17 @@ console.log('App starts running~')
 
 至于其他常用的加载器，我们在理解了 Loader 的机制过后，你可以通过官方的文档自行尝试。这里我罗列了几个开发经常用到的加载器，如下表所示：
 
-| 名称           | 链接                                                                                                 |
-| :------------- | :--------------------------------------------------------------------------------------------------- |
-| file-loader    | [https://webpack.js.org/loaders/file-loader](https://webpack.js.org/loaders/file-loader)             |
-| url-loader     | [https://webpack.js.org/loaders/url-loader](https://webpack.js.org/loaders/url-loader)               |
-| babel-loader   | [https://webpack.js.org/loaders/babel-loader](https://webpack.js.org/loaders/babel-loader)           |
-| style-loader   | [https://webpack.js.org/loaders/style-loader](https://webpack.js.org/loaders/style-loader)           |
-| css-loader     | [https://webpack.js.org/loaders/css-loader](https://webpack.js.org/loaders/css-loader)               |
-| sass-loader    | [https://webpack.js.org/loaders/sass-loader](https://webpack.js.org/loaders/sass-loader)             |
-| postcss-loader | [https://webpack.js.org/loaders/postcss-loader](https://webpack.js.org/loaders/postcss-loader)       |
-| eslint-loader  | [https://github.com/webpack-contrib/eslint-loader](https://github.com/webpack-contrib/eslint-loader) |
-| vue-loader     | [https://github.com/vuejs/vue-loader](https://github.com/vuejs/vue-loader)                           |
+| 名称 | 链接 |
+| :-- | :-- |
+| file-loader | [https://webpack.js.org/loaders/file-loader](https://webpack.js.org/loaders/file-loader) |
+| url-loader | [https://webpack.js.org/loaders/url-loader](https://webpack.js.org/loaders/url-loader) |
+| babel-loader | [https://webpack.js.org/loaders/babel-loader](https://webpack.js.org/loaders/babel-loader) |
+| style-loader | [https://webpack.js.org/loaders/style-loader](https://webpack.js.org/loaders/style-loader) |
+| css-loader | [https://webpack.js.org/loaders/css-loader](https://webpack.js.org/loaders/css-loader) |
+| sass-loader | [https://webpack.js.org/loaders/sass-loader](https://webpack.js.org/loaders/sass-loader) |
+| postcss-loader | [https://webpack.js.org/loaders/postcss-loader](https://webpack.js.org/loaders/postcss-loader) |
+| eslint-loader | [https://github.com/webpack-contrib/eslint-loader](https://github.com/webpack-contrib/eslint-loader) |
+| vue-loader | [https://github.com/vuejs/vue-loader](https://github.com/vuejs/vue-loader) |
 
 我每接触到一个新的加载器，核心就是搞明白这个 Loader 内部到底做了什么事情，它的目标是什么，其次才是这个 Loader 的配置用法。
 

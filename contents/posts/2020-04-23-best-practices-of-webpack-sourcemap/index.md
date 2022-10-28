@@ -85,21 +85,21 @@ module.exports = {
 
 Webpack 中的 `devtool` 配置，除了可以使用 `source-map` 这个值，它还支持很多其他的选项，具体的我们可以参考[文档](https://webpack.js.org/configuration/devtool/#devtool)中的不同模式的对比表。
 
-| **devtool 取值**               | **初次构建** | **重新构建** | **适合生产环境** | **品质**                 |
-| :----------------------------- | :----------- | :----------- | :--------------- | :----------------------- |
-| (none)                         | 最快         | 最快         | 是               | 无                       |
-| eval                           | 最快         | 最快         | 否               | 转换后代码               |
-| cheap-eval-source-map          | 快           | 更快         | 否               | 转换后代码（只有行信息） |
-| cheap-module-eval-source-map   | 慢           | 更快         | 否               | 源代码（只有行信息）     |
-| eval-source-map                | 最慢         | 慢           | 否               | 完整源代码               |
-| cheap-source-map               | 快           | 慢           | 是               | 转换后代码（只有行信息） |
-| cheap-module-source-map        | 慢           | 更慢         | 是               | 源代码（只有行信息）     |
-| inline-cheap-source-map        | 快           | 慢           | 否               | 转换后代码（只有行信息） |
-| inline-cheap-module-source-map | 慢           | 更慢         | 否               | 源代码（只有行信息）     |
-| source-map                     | 最慢         | 最慢         | 是               | 完整源代码               |
-| inline-source-map              | 最慢         | 最慢         | 否               | 完整源代码               |
-| hidden-source-map              | 最慢         | 最慢         | 是               | 完整源代码               |
-| nosources-source-map           | 最慢         | 最慢         | 是               | 无源码内容，只有行列信息 |
+| **devtool 取值** | **初次构建** | **重新构建** | **适合生产环境** | **品质** |
+| :-- | :-- | :-- | :-- | :-- |
+| (none) | 最快 | 最快 | 是 | 无 |
+| eval | 最快 | 最快 | 否 | 转换后代码 |
+| cheap-eval-source-map | 快 | 更快 | 否 | 转换后代码（只有行信息） |
+| cheap-module-eval-source-map | 慢 | 更快 | 否 | 源代码（只有行信息） |
+| eval-source-map | 最慢 | 慢 | 否 | 完整源代码 |
+| cheap-source-map | 快 | 慢 | 是 | 转换后代码（只有行信息） |
+| cheap-module-source-map | 慢 | 更慢 | 是 | 源代码（只有行信息） |
+| inline-cheap-source-map | 快 | 慢 | 否 | 转换后代码（只有行信息） |
+| inline-cheap-module-source-map | 慢 | 更慢 | 否 | 源代码（只有行信息） |
+| source-map | 最慢 | 最慢 | 是 | 完整源代码 |
+| inline-source-map | 最慢 | 最慢 | 否 | 完整源代码 |
+| hidden-source-map | 最慢 | 最慢 | 是 | 完整源代码 |
+| nosources-source-map | 最慢 | 最慢 | 是 | 无源码内容，只有行列信息 |
 
 上表分别从初次构建速度、监视模式重新构建速度、是否适合生成环境使用，以及 Source Map 的质量，这四个维度去横向对比了不同的 Source Map 模式之间的差异。
 
