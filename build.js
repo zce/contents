@@ -127,3 +127,5 @@ const courses = await loadMarkdowns('courses/**/*.md')
 await fs.writeFile(path.join(output, 'courses.json'), JSON.stringify(courses))
 await fs.writeFile(path.join(output, 'course-slugs.json'), JSON.stringify(courses.map(i => i.slug)))
 console.log(`Loaded ${courses.length} courses`)
+
+await fs.writeFile(path.join(output, 'CNAME'), 'cdn.zce.me')
