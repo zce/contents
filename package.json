@@ -21,7 +21,7 @@
     "create": "plop",
     "format": "prettier --write **/*.{md,yml}",
     "build": "npm run format && node build",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -t -f -d dist"
   },
   "prettier": {
     "arrowParens": "avoid",
