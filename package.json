@@ -20,8 +20,7 @@
     "lint": "standard --fix",
     "create": "plop",
     "format": "prettier --write **/*.{md,yml}",
-    "build": "npm run format && node build",
-    "deploy": "npm run build && gh-pages -t -f -d dist"
+    "build": "npm run format && node build"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -39,7 +38,6 @@
   "devDependencies": {
     "dayjs": "1.11.6",
     "fast-glob": "3.2.12",
-    "gh-pages": "4.0.0",
     "gray-matter": "4.0.3",
     "markdown-link-extractor": "3.1.0",
     "plop": "3.1.1",

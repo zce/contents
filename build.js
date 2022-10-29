@@ -8,6 +8,8 @@ import matter from 'gray-matter'
 import slugify from 'slugify'
 import linkExtractor from 'markdown-link-extractor'
 
+console.log('[build] start')
+
 const domain = 'cdn.zce.me'
 const input = path.join(process.cwd(), 'contents')
 const output = path.join(process.cwd(), 'dist')
@@ -19,15 +21,24 @@ const outputAsset = async (ref, source) => {
   try {
     const target = path.join(source, '..', ref)
     const content = await fs.readFile(target)
-    const hash = crypto.createHash('md5').update(content).digest('hex').slice(0, 8)
-    const filename = hash + path.extname(target)
+    const hash = crypto.createHash('md5').update(content).digest('hex').slice(8, 24)
+    const name = hash + path.extname(target)
     const dirname = path.join(output, 'assets')
     await fs.mkdir(dirname, { recursive: true })
-    await fs.copyFile(target, path.join(dirname, filename))
-    return `https://${domain}/assets/${filename}`
+    await fs.copyFile(target, path.join(dirname, name))
+    console.log(`[output] [asset] /assets/${name}`)
+    return `https://${domain}/assets/${name}`
   } catch (err) {
     return ref
   }
+}
+
+const outputData = async (name, data) => {
+  const filename = path.join(output, name)
+  const dirname = path.dirname(filename)
+  await fs.mkdir(dirname, { recursive: true })
+  await fs.writeFile(filename, typeof data === 'string' ? data : JSON.stringify(data))
+  console.log(`[output] [data] /${name}`)
 }
 
 const processMarkdown = async (content, filename) => {
@@ -41,7 +52,7 @@ const processMarkdown = async (content, filename) => {
   return content
 }
 
-const loadYaml = async (filename) => {
+const loadYaml = async filename => {
   const content = await fs.readFile(filename, 'utf8')
   if (!content) return []
 
@@ -63,12 +74,15 @@ const loadYaml = async (filename) => {
     return result
   }))
 
-  return results.filter(Boolean)
+  const filtered = results.filter(Boolean)
+  console.log(`[load] [yaml] ${filename} (${filtered.length} records)`)
+  return filtered
 }
 
-const loadMarkdowns = async (pattern) => {
+const loadMarkdowns = async pattern => {
   const files = await glob(pattern, { onlyFiles: true, cwd: input })
-  return await Promise.all(files.map(async item => {
+
+  const result = await Promise.all(files.map(async item => {
     const filename = path.join(input, item)
     const stats = await fs.stat(filename)
     const { data, content: originalContent } = matter(await fs.readFile(filename, 'utf8'))
@@ -97,36 +111,55 @@ const loadMarkdowns = async (pattern) => {
 
     return result
   }))
+
+  console.log(`[load] [markdown] ${pattern} (${result.length} records)`)
+  return result
 }
 
 const authors = await loadYaml(path.join(input, 'authors.yml'))
-await fs.writeFile(path.join(output, 'authors.json'), JSON.stringify(authors))
-await fs.writeFile(path.join(output, 'author-slugs.json'), JSON.stringify(authors.map(i => i.slug)))
-console.log(`Loaded ${authors.length} authors`)
-
 const categories = await loadYaml(path.join(input, 'categories.yml'))
-await fs.writeFile(path.join(output, 'categories.json'), JSON.stringify(categories))
-await fs.writeFile(path.join(output, 'category-slugs.json'), JSON.stringify(categories.map(i => i.slug)))
-console.log(`Loaded ${categories.length} categories`)
-
 const tags = await loadYaml(path.join(input, 'tags.yml'))
-await fs.writeFile(path.join(output, 'tags.json'), JSON.stringify(tags))
-await fs.writeFile(path.join(output, 'tag-slugs.json'), JSON.stringify(tags.map(i => i.slug)))
-console.log(`Loaded ${tags.length} tags`)
-
 const posts = await loadMarkdowns('posts/**/*.md')
-await fs.writeFile(path.join(output, 'posts.json'), JSON.stringify(posts))
-await fs.writeFile(path.join(output, 'post-slugs.json'), JSON.stringify(posts.map(i => i.slug)))
-console.log(`Loaded ${posts.length} posts`)
-
 const pages = await loadMarkdowns('pages/**/*.md')
-await fs.writeFile(path.join(output, 'pages.json'), JSON.stringify(pages))
-await fs.writeFile(path.join(output, 'page-slugs.json'), JSON.stringify(pages.map(i => i.slug)))
-console.log(`Loaded ${pages.length} pages`)
-
 const courses = await loadMarkdowns('courses/**/*.md')
-await fs.writeFile(path.join(output, 'courses.json'), JSON.stringify(courses))
-await fs.writeFile(path.join(output, 'course-slugs.json'), JSON.stringify(courses.map(i => i.slug)))
-console.log(`Loaded ${courses.length} courses`)
 
-await fs.writeFile(path.join(output, 'CNAME'), domain)
+await outputData('authors', authors)
+await outputData('categories', categories)
+await outputData('tags', tags)
+await outputData('posts', posts)
+await outputData('pages', pages)
+await outputData('courses', courses)
+await outputData('slugs', {
+  authors: authors.map(i => i.slug),
+  categories: categories.map(i => i.slug),
+  tags: tags.map(i => i.slug),
+  posts: posts.map(i => i.slug),
+  pages: pages.map(i => i.slug),
+  courses: courses.map(i => i.slug)
+})
+
+await outputData('CNAME', domain)
+await outputData('robots.txt', 'User-agent: *\nDisallow: /')
+await outputData('.nojekyll', '')
+
+console.log('[build] done')
+
+
+// await fs.writeFile(path.join(output, 'authors.json'), JSON.stringify(authors))
+// await fs.writeFile(path.join(output, 'author-slugs.json'), JSON.stringify(authors.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'categories.json'), JSON.stringify(categories))
+// await fs.writeFile(path.join(output, 'category-slugs.json'), JSON.stringify(categories.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'tags.json'), JSON.stringify(tags))
+// await fs.writeFile(path.join(output, 'tag-slugs.json'), JSON.stringify(tags.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'posts.json'), JSON.stringify(posts))
+// await fs.writeFile(path.join(output, 'post-slugs.json'), JSON.stringify(posts.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'pages.json'), JSON.stringify(pages))
+// await fs.writeFile(path.join(output, 'page-slugs.json'), JSON.stringify(pages.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'courses.json'), JSON.stringify(courses))
+// await fs.writeFile(path.join(output, 'course-slugs.json'), JSON.stringify(courses.map(i => i.slug)))
+// await fs.writeFile(path.join(output, 'CNAME'), domain)
+// await fs.writeFile(path.join(output, 'robots.txt'), )
+// await fs.writeFile(path.join(output, '.nojekyll'), '')
+// console.log('Created CNAME, robots.txt and .nojekyll')
+
+await fs.writeFile(path.join(output, 'courses'), JSON.stringify(courses))
