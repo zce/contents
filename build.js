@@ -112,6 +112,8 @@ const loadMarkdowns = async pattern => {
     return result
   }))
 
+  result.sort((a, b) => b.date - a.date)
+
   console.log(`[load] [markdown] ${pattern} (${result.length} records)`)
   return result
 }
