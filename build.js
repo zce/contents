@@ -12,7 +12,8 @@ console.log('[build] start')
 
 const domain = 'cdn.zce.me'
 const input = path.join(process.cwd(), 'contents')
-const output = path.join(process.cwd(), 'dist')
+const output = path.join(process.cwd(), 'public')
+
 // clear the output directory
 await fs.rm(output, { recursive: true, force: true })
 
@@ -52,7 +53,8 @@ const processMarkdown = async (content, filename) => {
   return content
 }
 
-const loadYaml = async filename => {
+const loadYaml = async name => {
+  const filename = path.join(input, name)
   const content = await fs.readFile(filename, 'utf8')
   if (!content) return []
 
@@ -118,12 +120,20 @@ const loadMarkdowns = async pattern => {
   return result
 }
 
-const authors = await loadYaml(path.join(input, 'authors.yml'))
-const categories = await loadYaml(path.join(input, 'categories.yml'))
-const tags = await loadYaml(path.join(input, 'tags.yml'))
+const authors = await loadYaml('authors.yml')
+const categories = await loadYaml('categories.yml')
+const tags = await loadYaml('tags.yml')
 const posts = await loadMarkdowns('posts/**/*.md')
 const pages = await loadMarkdowns('pages/**/*.md')
 const courses = await loadMarkdowns('courses/**/*.md')
+const slugs = {
+  authors: authors.map(i => i.slug),
+  categories: categories.map(i => i.slug),
+  tags: tags.map(i => i.slug),
+  posts: posts.map(i => i.slug),
+  pages: pages.map(i => i.slug),
+  courses: courses.map(i => i.slug)
+}
 
 await outputData('authors', authors)
 await outputData('categories', categories)
@@ -131,37 +141,10 @@ await outputData('tags', tags)
 await outputData('posts', posts)
 await outputData('pages', pages)
 await outputData('courses', courses)
-await outputData('slugs', {
-  authors: authors.map(i => i.slug),
-  categories: categories.map(i => i.slug),
-  tags: tags.map(i => i.slug),
-  posts: posts.map(i => i.slug),
-  pages: pages.map(i => i.slug),
-  courses: courses.map(i => i.slug)
-})
+await outputData('slugs', slugs)
 
 await outputData('CNAME', domain)
 await outputData('robots.txt', 'User-agent: *\nDisallow: /')
 await outputData('.nojekyll', '')
 
 console.log('[build] done')
-
-
-// await fs.writeFile(path.join(output, 'authors.json'), JSON.stringify(authors))
-// await fs.writeFile(path.join(output, 'author-slugs.json'), JSON.stringify(authors.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'categories.json'), JSON.stringify(categories))
-// await fs.writeFile(path.join(output, 'category-slugs.json'), JSON.stringify(categories.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'tags.json'), JSON.stringify(tags))
-// await fs.writeFile(path.join(output, 'tag-slugs.json'), JSON.stringify(tags.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'posts.json'), JSON.stringify(posts))
-// await fs.writeFile(path.join(output, 'post-slugs.json'), JSON.stringify(posts.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'pages.json'), JSON.stringify(pages))
-// await fs.writeFile(path.join(output, 'page-slugs.json'), JSON.stringify(pages.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'courses.json'), JSON.stringify(courses))
-// await fs.writeFile(path.join(output, 'course-slugs.json'), JSON.stringify(courses.map(i => i.slug)))
-// await fs.writeFile(path.join(output, 'CNAME'), domain)
-// await fs.writeFile(path.join(output, 'robots.txt'), )
-// await fs.writeFile(path.join(output, '.nojekyll'), '')
-// console.log('Created CNAME, robots.txt and .nojekyll')
-
-await fs.writeFile(path.join(output, 'courses'), JSON.stringify(courses))
